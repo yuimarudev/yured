@@ -49,10 +49,7 @@ jobs:
             sed -i 's/cargo:rustc-link-lib=iio/cargo:rustc-link-lib=static=iio/' "$f"
           done
       - run: |
-          if ! git clone --depth 1 --branch v0.25 https://github.com/analogdevicesinc/libiio.git; then
-            rm -rf libiio
-            git clone --depth 1 --branch v0.25.0 https://github.com/analogdevicesinc/libiio.git
-          fi
+          git clone --depth 1 --branch v0.25 https://github.com/analogdevicesinc/libiio.git
           cmake -S libiio -B libiio/build-${{ matrix.target }} -G Ninja \
             -DCMAKE_BUILD_TYPE=Release \
             -DCMAKE_C_COMPILER=zig \
@@ -64,7 +61,7 @@ jobs:
             -DLIBIIO_BUILD_TESTS=OFF \
             -DWITH_AIO=OFF \
             -DWITH_IIOD=OFF \
-            -DWITH_LIBTINYIIOD=ON \
+            -DNO_THREADS=ON \
             -DWITH_NETWORK_BACKEND=OFF \
             -DWITH_SERIAL_BACKEND=OFF \
             -DWITH_USB_BACKEND=OFF \
