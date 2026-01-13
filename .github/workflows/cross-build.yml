@@ -2,8 +2,10 @@ name: cross build
 
 on:
   push:
-    branches:
-      - master
+    paths:
+      - "src/**"
+      - "Cargo.*"
+      - ".github/workflows/cross-build.yml"
 
 jobs:
   build:
