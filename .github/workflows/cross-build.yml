@@ -15,19 +15,15 @@ jobs:
       matrix:
         include:
           - target: aarch64-unknown-linux-musl
-            rustflags: "-C target-feature=+crt-static"
             zig_target: aarch64-linux-musl
           - target: x86_64-unknown-linux-musl
-            rustflags: "-C target-feature=+crt-static"
             zig_target: x86_64-linux-musl
           - target: i686-unknown-linux-musl
-            rustflags: "-C target-feature=+crt-static,+sse2"
+            rustflags: "-C target-feature=+sse2"
             zig_target: x86-linux-musl
           - target: i586-unknown-linux-musl
-            rustflags: "-C target-feature=+crt-static,+sse2"
             zig_target: x86-linux-musl
           - target: riscv64gc-unknown-linux-musl
-            rustflags: "-C target-feature=+crt-static"
             zig_target: riscv64-linux-musl
     steps:
       - uses: actions/checkout@v4
