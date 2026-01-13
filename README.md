@@ -18,3 +18,5 @@ Options:
   -v, --verbose
   -h, --help                   Print help
 ```
+
+[systemd service](./assets/yured.service) もあります。
