@@ -63,6 +63,13 @@ jobs:
             -DWITH_ZSTD=OFF
           cmake --build libiio/build-${{ matrix.target }}
           cmake --install libiio/build-${{ matrix.target }}
+          libdir=$GITHUB_WORKSPACE/libiio/install-${{ matrix.target }}/lib
+          if [ ! -e "$libdir/libiio.so" ]; then
+            sofile=$(ls "$libdir"/libiio.so.* 2>/dev/null | head -n 1)
+            if [ -n "$sofile" ]; then
+              ln -s "$(basename "$sofile")" "$libdir/libiio.so"
+            fi
+          fi
       - run: cargo zigbuild --release --target ${{ matrix.target }}
         env:
           RUSTFLAGS: -L native=${{ github.workspace }}/libiio/install-${{ matrix.target }}/lib ${{ matrix.rustflags }}
