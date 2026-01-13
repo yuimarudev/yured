@@ -22,6 +22,7 @@ jobs:
             rustflags: "-C target-feature=+sse2"
             zig_target: x86-linux-musl
           - target: i586-unknown-linux-musl
+            rustflags: "-C target-feature=+sse2"
             zig_target: x86-linux-musl
           - target: riscv64gc-unknown-linux-musl
             zig_target: riscv64-linux-musl
