@@ -26,13 +26,13 @@ pub struct IioPoller {
 
 impl IioPoller {
   pub fn open_best(rate_hz: u32) -> Result<Self> {
-    let ctx = iio::Context::with_backend(iio::Backend::Local)?;
+    let ctx = iio::Context::with_backend(iio::Backend::Default)?;
 
     match Self::open_best_in_context(&ctx, rate_hz, None) {
       Ok(poller) => Ok(poller),
       Err(Error::IioTriggerNotFound) => {
         let trigger_guard = ensure_trigger_device()?;
-        let ctx = iio::Context::with_backend(iio::Backend::Local)?;
+        let ctx = iio::Context::with_backend(iio::Backend::Default)?;
 
         match Self::open_best_in_context(&ctx, rate_hz, trigger_guard) {
           Ok(poller) => Ok(poller),

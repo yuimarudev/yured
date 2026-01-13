@@ -34,7 +34,7 @@ jobs:
       - uses: dtolnay/rust-toolchain@nightly
         with:
           targets: ${{ matrix.target }}
-      - run: sudo apt-get update && sudo apt-get install -y cmake ninja-build pkg-config libaio-dev libavahi-client-dev libavahi-common-dev libcurl4-openssl-dev libserialport-dev libusb-1.0-0-dev libxml2-dev libzstd-dev zlib1g-dev
+      - run: sudo apt-get update && sudo apt-get install -y cmake ninja-build pkg-config libaio-dev libavahi-client-dev libavahi-common-dev libcurl4-openssl-dev libserialport-dev libusb-1.0-0-dev libxml2-dev libzstd-dev zlib1g-dev libaio-dev
       - uses: Swatinem/rust-cache@v2
         with:
           shared-key: ${{ matrix.target }}
