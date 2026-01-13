@@ -1336,6 +1336,7 @@ dependencies = [
  "clap",
  "industrial-io",
  "karen",
+ "nalgebra 0.33.2",
  "nalgebra 0.34.1",
  "nix",
  "num-traits",

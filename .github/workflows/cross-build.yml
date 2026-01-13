@@ -26,6 +26,9 @@ jobs:
       - uses: dtolnay/rust-toolchain@nightly
         with:
           targets: ${{ matrix.target }}
+      - uses: Swatinem/rust-cache@v2
+        with:
+          shared-key: ${{ matrix.target }}
       - uses: goto-bus-stop/setup-zig@v2
         with:
           version: 0.15.2

@@ -4,6 +4,8 @@
 
 ## 使い方
 
+[ビルド一覧の](https://github.com/yuimarudev/yured/actions/workflows/cross-build.yml) 最新のビルド結果からビルド済みバイナリを入手するか、Cargo を使いビルドしてください。
+
 IMU デバイスを見つけ、設定を行うため [libiio](https://github.com/analogdevicesinc/libiio) と適切な権限が必要です。めんどくさい場合は root で使いましょう（カス）。また、権限がない場合自動で権限昇格を行います。多分 libiio が動く環境ならどこでも動くはずです。
 
 ```bash
