@@ -1,6 +1,6 @@
 # yured
 
-みんなで [yure](github.com/KusaReMKN/yure) にデータを送りつけて揺れを公開しましょう
+みんなで [KusaReMKN/yure](https://github.com/KusaReMKN/yure) にデータを送りつけて揺れを公開しましょう
 
 ## 使い方
 
