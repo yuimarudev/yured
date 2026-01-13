@@ -19,4 +19,4 @@ Options:
   -h, --help                   Print help
 ```
 
-[systemd service](./assets/yured.service) もあります。
+[systemd service](./assets/etc/systemd/system/yured.service) もあります。簡単かつ勝手に起動してくれるのでおすすめです。assets ディレクトリにあるファイルをそれぞれ適切なパスに読み替え、内容を書き換えたあと `/etc/systemd/system/*` と `/etc/modules-load.d/*` にコピーし、`systemctl daemon-reload` と `systemctl enable yured.service configfs.mount` をして再起動するとすべてが正常に働きます。(Linux / systemd 環境のみ)

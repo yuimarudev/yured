@@ -1,6 +1,8 @@
 [Unit]
 Description=Sends sensor data to unstable.kusaremkn.com/yure
-After=network-online.target
+RequiresMountsFor=/sys/kernel/config
+AssertPathIsMountPoint=/sys/kernel/config
+After=systemd-modules-load.service network-online.target
 Wants=network-online.target
 
 [Service]

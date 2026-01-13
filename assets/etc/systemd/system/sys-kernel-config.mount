@@ -1,0 +1,10 @@
+[Unit]
+Description=Mount configfs
+
+[Mount]
+What=configfs
+Where=/sys/kernel/config
+Type=configfs
+
+[Install]
+WantedBy=multi-user.target
