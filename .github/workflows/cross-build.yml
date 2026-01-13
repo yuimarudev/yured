@@ -53,10 +53,13 @@ jobs:
             -DBUILD_SHARED_LIBS=ON \
             -DLIBIIO_BUILD_EXAMPLES=OFF \
             -DLIBIIO_BUILD_TESTS=OFF \
+            -DWITH_AIO=OFF \
+            -DWITH_IIOD=OFF \
             -DWITH_NETWORK_BACKEND=OFF \
             -DWITH_SERIAL_BACKEND=OFF \
             -DWITH_USB_BACKEND=OFF \
-            -DWITH_XML_BACKEND=OFF
+            -DWITH_XML_BACKEND=OFF \
+            -DWITH_ZSTD=OFF
           cmake --build libiio/build-${{ matrix.target }}
           cmake --install libiio/build-${{ matrix.target }}
       - run: cargo zigbuild --release --target ${{ matrix.target }}
