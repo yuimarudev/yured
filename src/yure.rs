@@ -4,7 +4,7 @@ use crate::{
 };
 use rand::seq::IndexedRandom as _;
 use serde::Serialize;
-use sys_info_extended::{linux_os_release, os_release, os_type};
+use sys_info::{linux_os_release, os_release, os_type};
 
 const YURE_ID_LEN: usize = 11;
 const YURE_ID_CHARSET: &[u8; 8] = b"YUREyure";

@@ -13,25 +13,28 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        target:
-          - aarch64-unknown-linux-musl
-          - x86_64-unknown-linux-musl
-          - i686-unknown-linux-musl
-          - i386-unknown-linux-musl
-          - riscv64gc-unknown-linux-musl
-        rustflags:
-          - ""
         include:
+          - target: aarch64-unknown-linux-musl
+            rustflags: ""
+            zig_target: aarch64-linux-musl
+          - target: x86_64-unknown-linux-musl
+            rustflags: ""
+            zig_target: x86_64-linux-musl
           - target: i686-unknown-linux-musl
             rustflags: "-C target-feature=+sse2"
-          - target: i386-unknown-linux-musl
+            zig_target: x86-linux-musl
+          - target: i586-unknown-linux-musl
             rustflags: "-C target-feature=+sse2"
+            zig_target: x86-linux-musl
+          - target: riscv64gc-unknown-linux-musl
+            rustflags: ""
+            zig_target: riscv64-linux-musl
     steps:
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@nightly
         with:
           targets: ${{ matrix.target }}
-      - run: sudo apt-get update && sudo apt-get install -y libiio-dev
+      - run: sudo apt-get update && sudo apt-get install -y cmake ninja-build
       - uses: Swatinem/rust-cache@v2
         with:
           shared-key: ${{ matrix.target }}
@@ -39,9 +42,26 @@ jobs:
         with:
           version: 0.15.2
       - run: cargo install cargo-zigbuild --locked
+      - run: |
+          git clone --depth 1 https://github.com/analogdevicesinc/libiio.git
+          cmake -S libiio -B libiio/build-${{ matrix.target }} -G Ninja \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DCMAKE_C_COMPILER=zig \
+            -DCMAKE_C_COMPILER_ARG1=cc \
+            -DCMAKE_C_COMPILER_TARGET=${{ matrix.zig_target }} \
+            -DCMAKE_INSTALL_PREFIX=$GITHUB_WORKSPACE/libiio/install-${{ matrix.target }} \
+            -DBUILD_SHARED_LIBS=OFF \
+            -DLIBIIO_BUILD_EXAMPLES=OFF \
+            -DLIBIIO_BUILD_TESTS=OFF \
+            -DWITH_NETWORK_BACKEND=OFF \
+            -DWITH_SERIAL_BACKEND=OFF \
+            -DWITH_USB_BACKEND=OFF \
+            -DWITH_XML_BACKEND=OFF
+          cmake --build libiio/build-${{ matrix.target }}
+          cmake --install libiio/build-${{ matrix.target }}
       - run: cargo zigbuild --release --target ${{ matrix.target }}
         env:
-          RUSTFLAGS: ${{ matrix.rustflags }}
+          RUSTFLAGS: -L native=${{ github.workspace }}/libiio/install-${{ matrix.target }}/lib ${{ matrix.rustflags }}
       - uses: actions/upload-artifact@v4
         with:
           name: yured-${{ matrix.target }}

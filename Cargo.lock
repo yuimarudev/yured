@@ -709,12 +709,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "384b8ab6d37215f3c5301a95a4accb5d64aa607f1fcb26a11b5303878451b4fe"
 
 [[package]]
-name = "palin"
-version = "0.8.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "fdb5adda67a7adc4e568de92b7cd42cc9c35dca08175da79bdd3129f85443abb"
-
-[[package]]
 name = "paste"
 version = "1.0.15"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1017,14 +1011,13 @@ dependencies = [
 ]
 
 [[package]]
-name = "sys-info-extended"
-version = "1.2.0"
+name = "sys-info"
+version = "0.9.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f2fa95b92a10b068e5d2300ec49a8a2529a4b38e65abf9b6b7193fd25271d950"
+checksum = "0b3a0d0aba8bf96a0e1ddfdc352fc53b3df7f39318c71854910c3c4b024ae52c"
 dependencies = [
  "cc",
  "libc",
- "palin",
 ]
 
 [[package]]
@@ -1344,7 +1337,7 @@ dependencies = [
  "ringbuffer",
  "serde",
  "serde_json",
- "sys-info-extended",
+ "sys-info",
  "tungstenite",
  "url",
  "vqf",

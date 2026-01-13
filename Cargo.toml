@@ -16,7 +16,7 @@ rand = "0.9.2"
 ringbuffer = "0.16"
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
-sys-info-extended = "1.2.0"
+sys-info = "0.9.1"
 tungstenite = { version = "0.21", features = ["rustls-tls-webpki-roots"] }
 url = "2.5"
 vqf = "0.4.1"
