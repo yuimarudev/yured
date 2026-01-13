@@ -1,5 +1,5 @@
 [Unit]
-Description=yured
+Description=Sends sensor data to unstable.kusaremkn.com/yure
 After=network-online.target
 Wants=network-online.target
 
