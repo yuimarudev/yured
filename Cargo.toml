@@ -2,6 +2,7 @@
 name = "yured"
 version = "0.1.0"
 edition = "2024"
+build = "build.rs"
 
 [dependencies]
 ahrs = { version = "0.8.0", features = ["field_access"] }
