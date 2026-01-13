@@ -55,6 +55,7 @@ jobs:
             -DLIBIIO_BUILD_TESTS=OFF \
             -DWITH_AIO=OFF \
             -DWITH_IIOD=OFF \
+            -DWITH_LIBTINYIIOD=ON \
             -DWITH_NETWORK_BACKEND=OFF \
             -DWITH_SERIAL_BACKEND=OFF \
             -DWITH_USB_BACKEND=OFF \
