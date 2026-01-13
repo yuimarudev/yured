@@ -42,6 +42,12 @@ jobs:
         with:
           version: 0.15.2
       - run: cargo install cargo-zigbuild --locked
+      - run: cargo fetch
+      - run: |
+          for f in ~/.cargo/registry/src/*/libiio-sys-*/build.rs; do
+            [ -f "$f" ] || continue
+            sed -i 's/cargo:rustc-link-lib=iio/cargo:rustc-link-lib=static=iio/' "$f"
+          done
       - run: |
           git clone --depth 1 https://github.com/analogdevicesinc/libiio.git
           cmake -S libiio -B libiio/build-${{ matrix.target }} -G Ninja \
@@ -50,7 +56,7 @@ jobs:
             -DCMAKE_C_COMPILER_ARG1=cc \
             -DCMAKE_C_COMPILER_TARGET=${{ matrix.zig_target }} \
             -DCMAKE_INSTALL_PREFIX=$GITHUB_WORKSPACE/libiio/install-${{ matrix.target }} \
-            -DBUILD_SHARED_LIBS=ON \
+            -DBUILD_SHARED_LIBS=OFF \
             -DLIBIIO_BUILD_EXAMPLES=OFF \
             -DLIBIIO_BUILD_TESTS=OFF \
             -DWITH_AIO=OFF \
@@ -63,13 +69,6 @@ jobs:
             -DWITH_ZSTD=OFF
           cmake --build libiio/build-${{ matrix.target }}
           cmake --install libiio/build-${{ matrix.target }}
-          libdir=$GITHUB_WORKSPACE/libiio/install-${{ matrix.target }}/lib
-          if [ ! -e "$libdir/libiio.so" ]; then
-            sofile=$(ls "$libdir"/libiio.so.* 2>/dev/null | head -n 1)
-            if [ -n "$sofile" ]; then
-              ln -s "$(basename "$sofile")" "$libdir/libiio.so"
-            fi
-          fi
       - run: cargo zigbuild --release --target ${{ matrix.target }}
         env:
           RUSTFLAGS: -L native=${{ github.workspace }}/libiio/install-${{ matrix.target }}/lib ${{ matrix.rustflags }}
@@ -90,12 +89,15 @@ jobs:
             target: aarch64-unknown-freebsd
           - arch: riscv64
             target: riscv64gc-unknown-freebsd
+            sync: scp
     steps:
       - uses: actions/checkout@v4
-      - uses: vmactions/freebsd-vm@v1
+      - uses: vmactions/freebsd-vm@v1.3.7
         with:
           arch: ${{ matrix.arch }}
           usesh: true
+          release: 15.0
+          sync: ${{ matrix.sync }}
           prepare: |
             pkg install -y curl git
             pkg install -y libiio
