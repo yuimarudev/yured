@@ -15,19 +15,19 @@ jobs:
       matrix:
         include:
           - target: aarch64-unknown-linux-musl
-            rustflags: ""
+            rustflags: "-C target-feature=-crt-static"
             zig_target: aarch64-linux-musl
           - target: x86_64-unknown-linux-musl
-            rustflags: ""
+            rustflags: "-C target-feature=-crt-static"
             zig_target: x86_64-linux-musl
           - target: i686-unknown-linux-musl
-            rustflags: "-C target-feature=+sse2"
+            rustflags: "-C target-feature=-crt-static,+sse2"
             zig_target: x86-linux-musl
           - target: i586-unknown-linux-musl
-            rustflags: "-C target-feature=+sse2"
+            rustflags: "-C target-feature=-crt-static,+sse2"
             zig_target: x86-linux-musl
           - target: riscv64gc-unknown-linux-musl
-            rustflags: ""
+            rustflags: "-C target-feature=-crt-static"
             zig_target: riscv64-linux-musl
     steps:
       - uses: actions/checkout@v4
@@ -50,7 +50,7 @@ jobs:
             -DCMAKE_C_COMPILER_ARG1=cc \
             -DCMAKE_C_COMPILER_TARGET=${{ matrix.zig_target }} \
             -DCMAKE_INSTALL_PREFIX=$GITHUB_WORKSPACE/libiio/install-${{ matrix.target }} \
-            -DBUILD_SHARED_LIBS=OFF \
+            -DBUILD_SHARED_LIBS=ON \
             -DLIBIIO_BUILD_EXAMPLES=OFF \
             -DLIBIIO_BUILD_TESTS=OFF \
             -DWITH_NETWORK_BACKEND=OFF \
