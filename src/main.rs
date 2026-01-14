@@ -62,7 +62,7 @@ fn main() -> Result<()> {
   let (tx, rx) = mpsc::sync_channel::<String>(config.batch);
   let sender_config = config.clone();
   let sender_queue = Arc::clone(&queue);
-  let sender_user_agent = generate_user_agent(config.algorithm);
+  let sender_user_agent = generate_user_agent(config.algorithm, config.rate);
   let sender_yure_id = yure_id.clone();
   let ws_url = "wss://unstable.kusaremkn.com/yure/".try_into().unwrap();
 

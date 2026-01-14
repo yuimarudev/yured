@@ -60,7 +60,7 @@ pub fn generate_yure_id() -> String {
   .unwrap()
 }
 
-pub fn generate_user_agent(algo: Algorithm) -> String {
+pub fn generate_user_agent(algo: Algorithm, rate: u32) -> String {
   let app_name = env!("CARGO_PKG_NAME");
   let app_version = env!("CARGO_PKG_VERSION");
   let arch = std::env::consts::ARCH;
@@ -69,5 +69,5 @@ pub fn generate_user_agent(algo: Algorithm) -> String {
     .unwrap_or(os_type().unwrap_or("Unknown".into()));
   let release = os_release().unwrap_or("unknown".into());
 
-  format!("{app_name} v{app_version}-{algo} on {name} {release} {arch}")
+  format!("{app_name} v{app_version}-{algo}-{rate}hz on {name} {release} {arch}")
 }
